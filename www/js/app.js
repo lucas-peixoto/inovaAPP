@@ -1,11 +1,28 @@
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'inovaAPP' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('inovaAPP', ['ionic'])
 
-.run(function($ionicPlatform) {
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+  .state('inside', {
+    url: '/inside',
+    templateUrl: 'templates/inside.html',
+    controller: 'InsideCtrl'
+  });
+
+  $urlRouterProvider.otherwise('/login');
+})
+
+.run(function ($ionicPlatform, $rootScope, $state, AuthService) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -21,4 +38,14 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
-})
+
+  $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+    if (!AuthService.isAuthenticated()) {
+      console.log(next.name);
+      if (next.name !== 'login') {
+        event.preventDefault();
+        $state.go('login');
+      }
+    }
+  });
+});
