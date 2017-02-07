@@ -5,8 +5,8 @@ angular.module('inovaAPP')
 })
 
 .constant('API_ENDPOINT', {
-  url: 'http://127.0.0.1:8080/index.php/',
-  authenticate: 'http://127.0.0.1:8080/index.php/authenticate',
-  getCurso: 'http://127.0.0.1:8080/index.php/get/',
-  getCursos: 'http://127.0.0.1:8080/index.php/get/all/'
+  url: 'http://inovaapi.000webhostapp.com/public/index.php/',
+  authenticate: 'http://inovaapi.000webhostapp.com/public/index.php/authenticate',
+  getCurso: 'http://inovaapi.000webhostapp.com/public/index.php/get/',
+  getCursos: 'http://inovaapi.000webhostapp.com/public/index.php/get/all/'
 });
