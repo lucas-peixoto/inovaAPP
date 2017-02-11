@@ -45,8 +45,9 @@ angular.module('inovaAPP')
   };
 
   var login = function(user) {
+    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
     return $q(function(resolve, reject) {
-      $http.post(API_ENDPOINT.authenticate, user).then(function(result) {
+      $http.post(API_ENDPOINT.authenticate, $.param({'username':user.username, 'password':user.password})).then(function(result) {
         console.log(result.data);
         if (result.data.success) {
           storeUserCredentials(result.data.token);
@@ -72,18 +73,3 @@ angular.module('inovaAPP')
     isAuthenticated: function() {return isAuthenticated;},
   };
 })
-
-.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
-  return {
-    responseError: function (response) {
-      $rootScope.$broadcast({
-        401: AUTH_EVENTS.notAuthenticated,
-      }[response.status], response);
-      return $q.reject(response);
-    }
-  };
-})
-
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('AuthInterceptor');
-});

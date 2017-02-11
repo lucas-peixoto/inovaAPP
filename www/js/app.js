@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('inovaAPP', ['ionic'])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   $stateProvider
   .state('login', {
@@ -20,6 +20,7 @@ angular.module('inovaAPP', ['ionic'])
   });
 
   $urlRouterProvider.otherwise('/login');
+  $ionicConfigProvider.scrolling.jsScrolling(true);
 })
 
 .run(function ($ionicPlatform, $rootScope, $state, AuthService) {
