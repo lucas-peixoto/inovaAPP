@@ -30,7 +30,7 @@ angular.module('inovaAPP')
   // };
 
   $scope.selectCurso = function(curso_id) {
-    $http.get(API_ENDPOINT.getCurso + curso_id + '/' + AuthService.token).then(function(result) {
+    $http.get(API_ENDPOINT.getCurso + curso_id + '/' + AuthService.token()).then(function(result) {
       $scope.selectedCurso = result.data;
     });
     $ionicSideMenuDelegate.toggleRight(true);
@@ -41,7 +41,9 @@ angular.module('inovaAPP')
     $state.go('login');
   };
 
-  $http.get(API_ENDPOINT.getCursos + AuthService.token).then(function(result) {
+  console.log("05" + AuthService.token());
+
+  $http.get(API_ENDPOINT.getCursos + AuthService.token()).then(function(result) {
     $scope.cursos = result.data;
   });
 })

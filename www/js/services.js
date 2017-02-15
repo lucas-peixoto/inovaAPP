@@ -1,7 +1,7 @@
 angular.module('inovaAPP')
 
 .service('AuthService', function($q, $http, API_ENDPOINT) {
-  var LOCAL_TOKEN_KEY = 'abacate';
+  var LOCAL_TOKEN_KEY = "abacate";
   var isAuthenticated = false;
   var authToken;
 
@@ -13,6 +13,7 @@ angular.module('inovaAPP')
   }
 
   function storeUserCredentials(token) {
+    console.log("03" + token);
     window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
     useCredentials(token);
   }
@@ -20,6 +21,7 @@ angular.module('inovaAPP')
   function useCredentials(token) {
     isAuthenticated = true;
     authToken = token;
+    console.log("04" + authToken);
 
     // Set the token as header for your requests!
     // $http.defaults.headers.common.Authorization = authToken;
@@ -48,8 +50,9 @@ angular.module('inovaAPP')
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
     return $q(function(resolve, reject) {
       $http.post(API_ENDPOINT.authenticate, $.param({'username':user.username, 'password':user.password})).then(function(result) {
-        console.log(result.data);
+        console.log("01" + result.data.success + "-" + result.data.token);
         if (result.data.success) {
+          console.log("02" + result.data.success + "-" + result.data.token);
           storeUserCredentials(result.data.token);
           resolve(result.data.msg);
         } else {
@@ -69,7 +72,7 @@ angular.module('inovaAPP')
     login: login,
     register: register,
     logout: logout,
-    token: authToken,
-    isAuthenticated: function() {return isAuthenticated;},
+    token: function() {return authToken;},
+    isAuthenticated: function() {return isAuthenticated;}
   };
 })
