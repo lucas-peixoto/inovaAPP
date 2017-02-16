@@ -16,10 +16,10 @@
     <!-- Center content -->
     <ion-side-menu-content>
         <ion-header-bar align-title="center" class="bar-positive">
-          <h1 class="title">Cursos</h1>
           <div class="buttons">
             <button class="button button-clear" ng-click="logout()">Sair</button>
           </div>
+          <h1 class="title">Cursos</h1>
         </ion-header-bar>
         <ion-content>
           <ion-list>
@@ -35,15 +35,19 @@
         <ion-header-bar align-title="center" class="bar-positive">
           <h1 class="title">{{selectedCurso.nome}}</h1>
         </ion-header-bar>
-        <ion-content class="padding">
-            <ul>
-                <li>Total de alunos: {{selectedCurso.alunos}}</li>
-                <li><ul>
-                    <li>-Alunos manhã: {{selectedCurso.turno_manha}}</li>
-                    <li>-Alunos tarde: {{selectedCurso.turno_tarde}}</li>
-                    <li>-Alunos noite: {{selectedCurso.turno_noite}}</li>
-                </ul></li>
-            </ul>
+        <ion-content>
+            <div class="item item-divider">
+                Total de alunos: {{selectedCurso.total_alunos}}
+            </div>
+            <div class="item">
+                -Alunos manhã: {{selectedCurso.turno_manha}}
+            </div>
+            <div class="item">
+                -Alunos tarde: {{selectedCurso.turno_tarde}}
+            </div>
+            <div class="item">
+                -Alunos noite: {{selectedCurso.turno_noite}}
+            </div>
         </ion-content>
     </ion-side-menu>
   </ion-side-menus>

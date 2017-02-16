@@ -1,15 +1,18 @@
 angular.module('inovaAPP')
 
-.controller('LoginCtrl', function($scope, AuthService, $ionicPopup, $state) {
+.controller('LoginCtrl', function($scope, AuthService, $ionicPopup, $ionicLoading, $state) {
   $scope.user = {
     username: '',
     password: ''
   };
 
   $scope.login = function() {
+    $ionicLoading.show();
     AuthService.login($scope.user).then(function(msg) {
+      $ionicLoading.hide();
       $state.go('inside');
     }, function(errMsg) {
+      $ionicLoading.hide();
       var alertPopup = $ionicPopup.alert({
         title: 'Login failed!',
         template: errMsg
@@ -18,7 +21,7 @@ angular.module('inovaAPP')
   };
 })
 
-.controller('InsideCtrl', function($scope, AuthService, API_ENDPOINT, $http, $state, $ionicSideMenuDelegate) {
+.controller('InsideCtrl', function($scope, AuthService, API_ENDPOINT, $http, $state, $ionicSideMenuDelegate, $ionicLoading) {
   // $scope.destroySession = function() {
   //   AuthService.logout();
   // };
@@ -30,7 +33,9 @@ angular.module('inovaAPP')
   // };
 
   $scope.selectCurso = function(curso_id) {
+    $ionicLoading.show();
     $http.get(API_ENDPOINT.getCurso + curso_id + '/' + AuthService.token()).then(function(result) {
+      $ionicLoading.hide();
       $scope.selectedCurso = result.data;
     });
     $ionicSideMenuDelegate.toggleRight(true);
